@@ -4,9 +4,9 @@
 # WebSockets
 ---
 
-## 🔹 WebSockets – Fundamentals
+## 1. WebSockets – Fundamentals
 
-### 1. What are WebSockets?
+### 1.1. What are WebSockets?
 
 * WebSockets are a communication protocol that provides **full-duplex, bidirectional communication** between client and server over a **single, persistent TCP connection**.
 * Unlike traditional request-response models, both client and server can **send messages independently at any time** once the connection is established.
@@ -14,7 +14,7 @@
 
 ---
 
-### 2. WebSockets vs HTTP
+### 1.2. WebSockets vs HTTP
 
 | Aspect               | HTTP                               | WebSockets                          |
 | -------------------- | ---------------------------------- | ----------------------------------- |
@@ -29,7 +29,7 @@ HTTP is **pull-based**, whereas WebSockets enable **push + pull**.
 
 ---
 
-### 3. Common Use Cases
+### 1.3. Common Use Cases
 
 * **Chat applications** (e.g., WhatsApp, Slack-like systems)
 * **Online gaming** (real-time player state updates)
@@ -40,9 +40,9 @@ HTTP is **pull-based**, whereas WebSockets enable **push + pull**.
 
 ---
 
-### 4. Polling vs Long-Polling vs SSE vs WebSockets
+### 1.4. Polling vs Long-Polling vs SSE vs WebSockets
 
-#### 🔸 Polling
+#### 1.4.1. Polling
 
 * Client repeatedly sends requests at fixed intervals
 * Server responds immediately (even if no new data)
@@ -50,7 +50,7 @@ HTTP is **pull-based**, whereas WebSockets enable **push + pull**.
 
 ---
 
-#### 🔸 Long-Polling
+#### 1.4.2. Long-Polling
 
 * Client sends request → server holds it until data is available or timeout
 * Once response is received, client immediately sends another request
@@ -59,7 +59,7 @@ HTTP is **pull-based**, whereas WebSockets enable **push + pull**.
 
 ---
 
-#### 🔸 Server-Sent Events (SSE)
+#### 1.4.3. Server-Sent Events (SSE)
 
 * Server pushes updates to client over a **single HTTP connection**
 * Unidirectional: **server → client only**
@@ -69,7 +69,7 @@ HTTP is **pull-based**, whereas WebSockets enable **push + pull**.
 
 ---
 
-#### 🔸 WebSockets
+#### 1.4.4. WebSockets
 
 * True **full-duplex communication**
 * Persistent connection after initial handshake
@@ -87,9 +87,9 @@ HTTP is **pull-based**, whereas WebSockets enable **push + pull**.
 ---
 
 
-## 🔹 WebSockets – Protocol & Mechanics
+## 2. WebSockets – Protocol & Mechanics
 
-### 1. WebSocket Handshake
+### 2.1. WebSocket Handshake
 
 * WebSockets start as a **standard HTTP request** and then upgrade to a persistent connection.
 * The client sends an HTTP request with special headers:
@@ -113,7 +113,7 @@ After the handshake, communication is no longer HTTP — it uses the WebSocket p
 
 ---
 
-### 2. ws:// vs wss://
+### 2.2. ws:// vs wss://
 
 * `ws://` → Plain WebSocket (no encryption)
 * `wss://` → Secure WebSocket (runs over TLS, similar to HTTPS)
@@ -130,11 +130,11 @@ After the handshake, communication is no longer HTTP — it uses the WebSocket p
 
 ---
 
-### 3. Frame Structure
+### 2.3. Frame Structure
 
 After the connection is established, data is exchanged in **frames**, not HTTP messages.
 
-#### 🔸 Types of Frames
+#### 2.3.1. Types of Frames
 
 * **Text frames** → UTF-8 encoded data (JSON, strings)
 * **Binary frames** → Raw binary (protobuf, images, etc.)
@@ -144,7 +144,7 @@ After the connection is established, data is exchanged in **frames**, not HTTP m
   * **Pong** → Response to ping
   * **Close** → Graceful shutdown signal
 
-#### 🔸 Key Characteristics
+#### 2.3.2. Key Characteristics
 
 * Lightweight (much smaller than HTTP headers)
 * Supports **fragmentation** (large messages split into frames)
@@ -152,24 +152,24 @@ After the connection is established, data is exchanged in **frames**, not HTTP m
 
 ---
 
-### 4. Connection Lifecycle
+### 2.4. Connection Lifecycle
 
-#### 🔸 Open
+#### 2.4.1. Open
 
 * Begins with HTTP handshake and upgrade
 * Once established, connection stays open
 
-#### 🔸 Message Exchange
+#### 2.4.2. Message Exchange
 
 * Both client and server can send messages anytime
 * No request-response restriction (true bidirectional)
 
-#### 🔸 Keepalive
+#### 2.4.3. Keepalive
 
 * Ping/Pong frames ensure connection is still active
 * Helps detect broken or idle connections
 
-#### 🔸 Close
+#### 2.4.4. Close
 
 * Either side can initiate closure
 * Uses a **close frame** with optional status code
@@ -188,9 +188,9 @@ After the connection is established, data is exchanged in **frames**, not HTTP m
 ---
 
 
-## 🔹 WebSockets – Architecture & Scaling
+## 3. WebSockets – Architecture & Scaling
 
-### 1. Stateful vs Stateless Nature
+### 3.1. Stateful vs Stateless Nature
 
 * WebSockets are inherently **stateful**:
 
@@ -206,7 +206,7 @@ After the connection is established, data is exchanged in **frames**, not HTTP m
 
 ---
 
-### 2. Horizontal Scaling Challenges
+### 3.2. Horizontal Scaling Challenges
 
 * In a scaled system (multiple servers), problems arise:
 
@@ -221,9 +221,9 @@ After the connection is established, data is exchanged in **frames**, not HTTP m
 
 ---
 
-### 3. Load Balancing Strategies
+### 3.3. Load Balancing Strategies
 
-#### 🔸 Layer 4 (Transport-level)
+#### 3.3.1. Layer 4 (Transport-level)
 
 * Works at TCP level (IP + port)
 * Pros:
@@ -236,7 +236,7 @@ After the connection is established, data is exchanged in **frames**, not HTTP m
 
 ---
 
-#### 🔸 Layer 7 (Application-level)
+#### 3.3.2. Layer 7 (Application-level)
 
 * Works at HTTP/WebSocket protocol level
 * Can inspect headers, cookies, paths
@@ -249,7 +249,7 @@ After the connection is established, data is exchanged in **frames**, not HTTP m
 
 ---
 
-#### 🔸 Sticky Sessions (Session Affinity)
+#### 3.3.3. Sticky Sessions (Session Affinity)
 
 * Ensures a client always hits the **same backend server**
 * Techniques:
@@ -264,22 +264,22 @@ After the connection is established, data is exchanged in **frames**, not HTTP m
 
 ---
 
-### 4. Using Message Brokers for Scaling
+### 3.4. Using Message Brokers for Scaling
 
 To decouple servers and share events:
 
-#### 🔸 Pattern:
+#### 3.4.1. Pattern:
 
 * Each WebSocket server handles its own client connections
 * Backend services publish events to a **message broker**
 * All WebSocket servers subscribe and forward messages to relevant clients
 
-#### 🔸 Common choices:
+#### 3.4.2. Common choices:
 
 * Redis (Pub/Sub, low latency)
 * Apache Kafka (high throughput, durable streams)
 
-#### 🔸 Benefits:
+#### 3.4.3. Benefits:
 
 * Enables **horizontal scaling**
 * Decouples producers from WebSocket nodes
@@ -287,23 +287,23 @@ To decouple servers and share events:
 
 ---
 
-### 5. Fan-out Patterns (Broadcasting)
+### 3.5. Fan-out Patterns (Broadcasting)
 
 Fan-out = sending one message to many clients
 
-#### 🔸 Types:
+#### 3.5.1. Types:
 
 * **1 → 1**: direct messaging (chat)
 * **1 → many**: room/channel broadcast (chat room, live stream)
 * **many → many**: collaborative systems
 
-#### 🔸 Implementation Approaches:
+#### 3.5.2. Implementation Approaches:
 
 * In-memory (single node) → simple but not scalable
 * Broker-based fan-out → scalable across nodes
 * Hierarchical fan-out → reduce duplication at scale
 
-#### 🔸 Challenges:
+#### 3.5.3. Challenges:
 
 * Efficiently tracking **subscriptions (who listens to what)**
 * Avoiding duplicate deliveries
@@ -321,9 +321,9 @@ Fan-out = sending one message to many clients
 ---
 
 
-## 🔹 WebSockets – Reliability & Performance
+## 4. WebSockets – Reliability & Performance
 
-### 1. Handling Dropped Connections & Reconnection
+### 4.1. Handling Dropped Connections & Reconnection
 
 * WebSocket connections can drop due to:
 
@@ -332,7 +332,7 @@ Fan-out = sending one message to many clients
   * Server restarts or deploys
   * Idle timeouts (proxies, load balancers)
 
-#### 🔸 Reconnection Strategies
+#### 4.1.1. Reconnection Strategies
 
 * Clients should automatically reconnect when disconnected
 * Use **exponential backoff**:
@@ -349,7 +349,7 @@ Design assuming **connections are unreliable by default**.
 
 ---
 
-### 2. Heartbeats (Ping/Pong)
+### 4.2. Heartbeats (Ping/Pong)
 
 * Used to detect **dead or stale connections**
 * Mechanism:
@@ -361,7 +361,7 @@ Design assuming **connections are unreliable by default**.
   * Identify broken TCP connections
   * Keep connection alive through intermediaries (proxies)
 
-#### 🔸 Best Practices
+#### 4.2.1. Best Practices
 
 * Regular interval (e.g., 20–30 seconds)
 * Close connection if no pong received within timeout
@@ -369,14 +369,14 @@ Design assuming **connections are unreliable by default**.
 
 ---
 
-### 3. Backpressure Handling (Slow Clients)
+### 4.3. Backpressure Handling (Slow Clients)
 
 * Problem:
 
   * Server produces messages faster than client can consume
   * Leads to **buffer buildup → memory pressure → crashes**
 
-#### 🔸 Strategies:
+#### 4.3.1. Strategies:
 
 * **Buffer limits**:
 
@@ -397,11 +397,11 @@ In stock price streaming, you may drop intermediate updates and only send the la
 
 ---
 
-### 4. Rate Limiting & Throttling
+### 4.4. Rate Limiting & Throttling
 
 * Prevent abuse and protect system stability
 
-#### 🔸 Types:
+#### 4.4.1. Types:
 
 * **Connection limits** per IP/user
 * **Message rate limits** (messages/sec per client)
@@ -418,7 +418,7 @@ WebSockets can be abused for **message flooding or DoS attacks**.
 
 ---
 
-### 5. Memory & Connection Limits per Server
+### 4.5. Memory & Connection Limits per Server
 
 * Each connection consumes:
 
@@ -426,19 +426,19 @@ WebSockets can be abused for **message flooding or DoS attacks**.
   * Memory (buffers, metadata)
   * CPU (event loop handling)
 
-#### 🔸 Constraints:
+#### 4.5.1. Constraints:
 
 * OS limits (e.g., max open file descriptors)
 * Runtime limits (Node.js, JVM thread/memory constraints)
 
-#### 🔸 Optimization Strategies:
+#### 4.5.2. Optimization Strategies:
 
 * Use **event-driven, non-blocking servers** (e.g., epoll-based)
 * Tune OS settings (ulimit, TCP stack)
 * Keep message payloads small
 * Use binary formats where possible
 
-#### 🔸 Capacity Planning:
+#### 4.5.3. Capacity Planning:
 
 * Estimate:
 
@@ -460,9 +460,9 @@ WebSockets can be abused for **message flooding or DoS attacks**.
 ---
 
 
-## 🔹 WebSockets – Security
+## 5. WebSockets – Security
 
-### 1. Authentication Strategies
+### 5.1. Authentication Strategies
 
 * WebSockets don’t have built-in auth → must be handled during or after handshake
 
@@ -480,7 +480,7 @@ WebSockets can be abused for **message flooding or DoS attacks**.
 
   * Often used in mobile or microservices
 
-#### 🔸 Key Considerations:
+#### 5.1.2. Key Considerations:
 
 * Authenticate **at connection time**
 * Optionally revalidate periodically for long-lived connections
@@ -488,11 +488,11 @@ WebSockets can be abused for **message flooding or DoS attacks**.
 
 ---
 
-### 2. Authorization (Per Message / Channel)
+### 5.2. Authorization (Per Message / Channel)
 
 * Authentication ≠ Authorization
 
-#### 🔸 Patterns:
+#### 5.2.1. Patterns:
 
 * **Channel-based authorization**:
 
@@ -501,7 +501,7 @@ WebSockets can be abused for **message flooding or DoS attacks**.
 
   * Validate every incoming action (send message, join room, etc.)
 
-#### 🔸 Example:
+#### 5.2.2. Example:
 
 * User authenticated ✔
 * But cannot:
@@ -515,26 +515,26 @@ WebSockets can be abused for **message flooding or DoS attacks**.
 
 ---
 
-### 3. TLS (wss://) Usage
+### 5.3. TLS (wss://) Usage
 
 * Always use **`wss://` (WebSocket over TLS)** in production
 
-#### 🔸 Why:
+#### 5.3.1. Why:
 
 * Encrypts data in transit
 * Prevents **Man-in-the-Middle (MITM)** attacks
 * Ensures secure authentication token exchange
 
-#### 🔸 Notes:
+#### 5.3.2. Notes:
 
 * Same security guarantees as HTTPS
 * Required for most modern browsers in secure contexts
 
 ---
 
-### 4. Preventing Common Attacks
+### 5.4. Preventing Common Attacks
 
-#### 🔸 Connection Flooding (DoS)
+#### 5.4.1. Connection Flooding (DoS)
 
 * Attacker opens many WebSocket connections
 
@@ -546,7 +546,7 @@ WebSockets can be abused for **message flooding or DoS attacks**.
 
 ---
 
-#### 🔸 Message Flooding
+#### 5.4.2. Message Flooding
 
 * Excessive messages sent over a valid connection
 
@@ -557,7 +557,7 @@ WebSockets can be abused for **message flooding or DoS attacks**.
 
 ---
 
-#### 🔸 Payload Attacks
+#### 5.4.3. Payload Attacks
 
 * Large or malformed messages
 
@@ -568,7 +568,7 @@ WebSockets can be abused for **message flooding or DoS attacks**.
 
 ---
 
-#### 🔸 Idle Connection Abuse
+#### 5.4.4. Idle Connection Abuse
 
 * Open connections without activity
 
@@ -579,11 +579,11 @@ WebSockets can be abused for **message flooding or DoS attacks**.
 
 ---
 
-### 5. CORS & Origin Checks
+### 5.5. CORS & Origin Checks
 
 * WebSockets are **not fully governed by standard CORS rules**, but:
 
-#### 🔸 Origin Header:
+#### 5.5.1. Origin Header:
 
 * Browser sends an `Origin` header during handshake
 * Server should validate it
@@ -608,11 +608,11 @@ WebSockets can be abused for **message flooding or DoS attacks**.
 ---
 
 
-## 🔹 WebSockets – Implementation Knowledge
+## 6. WebSockets – Implementation Knowledge
 
-### 1. Libraries / Frameworks
+### 6.1. Libraries / Frameworks
 
-#### 🔸 Native WebSocket APIs
+#### 6.1.1. Native WebSocket APIs
 
 * Browser provides built-in `WebSocket` API
 * Backend examples:
@@ -637,7 +637,7 @@ WebSockets can be abused for **message flooding or DoS attacks**.
 
 ---
 
-#### 🔸 Abstraction Libraries (e.g., Socket.IO)
+#### 6.1.2. Abstraction Libraries (e.g., Socket.IO)
 
 * Socket.IO provides a higher-level abstraction over WebSockets
 
@@ -655,7 +655,7 @@ WebSockets can be abused for **message flooding or DoS attacks**.
 
 ---
 
-### 2. Raw WebSockets vs Abstractions
+### 6.2. Raw WebSockets vs Abstractions
 
 | Aspect        | Raw WebSockets         | Socket.IO (or similar)              |
 | ------------- | ---------------------- | ----------------------------------- |
@@ -672,9 +672,9 @@ WebSockets can be abused for **message flooding or DoS attacks**.
 
 ---
 
-### 3. Handling Binary Data
+### 6.3. Handling Binary Data
 
-#### 🔸 JSON (Text Frames)
+#### 6.3.1. JSON (Text Frames)
 
 * Most common format
 * Human-readable, easy to debug
@@ -686,7 +686,7 @@ WebSockets can be abused for **message flooding or DoS attacks**.
 
 ---
 
-#### 🔸 Binary Formats
+#### 6.3.2. Binary Formats
 
 * Examples:
 
@@ -711,11 +711,11 @@ WebSockets can be abused for **message flooding or DoS attacks**.
 
 ---
 
-### 4. Versioning & Backward Compatibility
+### 6.4. Versioning & Backward Compatibility
 
 * WebSocket connections are long-lived → version mismatches are common
 
-#### 🔸 Challenges:
+#### 6.4.1. Challenges:
 
 * Clients may run older versions
 * Server deploys can introduce breaking changes
@@ -739,7 +739,7 @@ WebSockets can be abused for **message flooding or DoS attacks**.
 
 ---
 
-#### 🔸 Contract Management:
+#### 6.4.3. Contract Management:
 
 * Treat WebSocket messages like APIs
 * Use schema validation (e.g., JSON schema, protobuf schema)
@@ -758,11 +758,11 @@ WebSockets can be abused for **message flooding or DoS attacks**.
 ---
 
 
-## 🔹 WebSockets – Observability & Debugging
+## 7. WebSockets – Observability & Debugging
 
-### 1. Logging (Connection Events & Message Flow)
+### 7.1. Logging (Connection Events & Message Flow)
 
-#### 🔸 What to Log:
+#### 7.1.1. What to Log:
 
 * **Connection lifecycle events**:
 
@@ -788,9 +788,9 @@ Be able to trace *“what happened to this user’s connection?”*
 
 ---
 
-### 2. Metrics (Key Signals to Monitor)
+### 7.2. Metrics (Key Signals to Monitor)
 
-#### 🔸 Core Metrics:
+#### 7.2.1. Core Metrics:
 
 * **Active connections** (current open sockets)
 * **Connection rate** (new connections/sec, disconnects/sec)
@@ -807,7 +807,7 @@ Be able to trace *“what happened to this user’s connection?”*
 
 ---
 
-#### 🔸 System Metrics:
+#### 7.2.2. System Metrics:
 
 * CPU, memory usage
 * Event loop lag (Node.js)
@@ -815,7 +815,7 @@ Be able to trace *“what happened to this user’s connection?”*
 
 ---
 
-#### 🔸 Why it matters:
+#### 7.2.3. Why it matters:
 
 * Helps detect:
 
@@ -826,9 +826,9 @@ Be able to trace *“what happened to this user’s connection?”*
 
 ---
 
-### 3. Debugging Tools
+### 7.3. Debugging Tools
 
-#### 🔸 Browser DevTools
+#### 7.3.1. Browser DevTools
 
 * Inspect WebSocket connections in **Network tab**
 * View:
@@ -839,7 +839,7 @@ Be able to trace *“what happened to this user’s connection?”*
 
 ---
 
-#### 🔸 Packet-Level Tools
+#### 7.3.2. Packet-Level Tools
 
 * Wireshark
 
@@ -848,7 +848,7 @@ Be able to trace *“what happened to this user’s connection?”*
 
 ---
 
-#### 🔸 Server-side Debugging
+#### 7.3.3. Server-side Debugging
 
 * Connection dumps (active clients)
 * Replay logs
@@ -856,16 +856,16 @@ Be able to trace *“what happened to this user’s connection?”*
 
 ---
 
-### 4. Distributed Tracing in Real-Time Systems
+### 7.4. Distributed Tracing in Real-Time Systems
 
-#### 🔸 Problem:
+#### 7.4.1. Problem:
 
 * WebSockets are long-lived → not simple request-response
 * Harder to trace compared to HTTP APIs
 
 ---
 
-#### 🔸 Approach:
+#### 7.4.2. Approach:
 
 * Assign a **connection ID** per socket
 * Attach **trace IDs** to messages/events
@@ -873,7 +873,7 @@ Be able to trace *“what happened to this user’s connection?”*
 
 ---
 
-#### 🔸 Tools/Concepts:
+#### 7.4.3. Tools/Concepts:
 
 * OpenTelemetry-style tracing
 * Correlating:
@@ -882,7 +882,7 @@ Be able to trace *“what happened to this user’s connection?”*
 
 ---
 
-#### 🔸 Example Flow:
+#### 7.4.4. Example Flow:
 
 1. User sends message via WebSocket
 2. Message carries trace ID
@@ -899,11 +899,11 @@ Be able to trace *“what happened to this user’s connection?”*
 
 ---
 
-## 🔹 WebSockets – System Design Perspective
+## 8. WebSockets – System Design Perspective
 
-### 1. Designing Real-Time Systems
+### 8.1. Designing Real-Time Systems
 
-#### 🔸 Chat Systems
+#### 8.1.1. Chat Systems
 
 * Requirements:
 
@@ -922,7 +922,7 @@ Be able to trace *“what happened to this user’s connection?”*
 
 ---
 
-#### 🔸 Live Dashboards (e.g., stock prices)
+#### 8.1.2. Live Dashboards (e.g., stock prices)
 
 * Requirements:
 
@@ -938,7 +938,7 @@ Be able to trace *“what happened to this user’s connection?”*
 
 ---
 
-#### 🔸 Multiplayer Systems
+#### 8.1.3. Multiplayer Systems
 
 * Requirements:
 
@@ -954,7 +954,7 @@ Be able to trace *“what happened to this user’s connection?”*
 
 ---
 
-### 2. Trade-offs: WebSockets vs REST vs SSE
+### 8.2. Trade-offs: WebSockets vs REST vs SSE
 
 | Feature       | WebSockets        | REST               | SSE               |
 | ------------- | ----------------- | ------------------ | ----------------- |
@@ -964,7 +964,7 @@ Be able to trace *“what happened to this user’s connection?”*
 | Complexity    | High              | Low                | Medium            |
 | Use case      | Real-time apps    | CRUD APIs          | Streaming updates |
 
-#### 🔸 When to Use What:
+#### 8.2.1. When to Use What:
 
 * **WebSockets** → interactive, real-time (chat, gaming)
 * **REST** → standard APIs, non-real-time operations
@@ -972,9 +972,9 @@ Be able to trace *“what happened to this user’s connection?”*
 
 ---
 
-### 3. Cost Considerations
+### 8.3. Cost Considerations
 
-#### 🔸 WebSockets:
+#### 8.3.1. WebSockets:
 
 * Long-lived connections → consume:
 
@@ -985,14 +985,14 @@ Be able to trace *“what happened to this user’s connection?”*
 
 ---
 
-#### 🔸 REST:
+#### 8.3.2. REST:
 
 * Stateless → better resource utilization
 * Scales easily with autoscaling
 
 ---
 
-#### 🔸 Cost Trade-off:
+#### 8.3.3. Cost Trade-off:
 
 * WebSockets:
 
@@ -1010,9 +1010,9 @@ Be able to trace *“what happened to this user’s connection?”*
 
 ---
 
-### 4. Multi-Region Deployment & Latency Optimization
+### 8.4. Multi-Region Deployment & Latency Optimization
 
-#### 🔸 Challenges:
+#### 8.4.1. Challenges:
 
 * Latency increases with distance
 * Maintaining state across regions is complex
@@ -1066,7 +1066,7 @@ Here’s a strong, practical note for **Edge Cases & Production Concerns in WebS
 
 ---
 
-### 1. Network Partitions & Intermittent Connectivity
+### 9.1. Network Partitions & Intermittent Connectivity
 
 * Common in:
 
@@ -1074,7 +1074,7 @@ Here’s a strong, practical note for **Edge Cases & Production Concerns in WebS
   * Unstable internet conditions
   * Cross-region latency spikes
 
-#### 🔸 Problems:
+#### 9.1.1. Problems:
 
 * Silent disconnects (connection appears open but is dead)
 * Message loss or duplication
@@ -1096,13 +1096,13 @@ Design for **eventual recovery, not perfect connectivity**
 
 ---
 
-### 2. Graceful Shutdown (Connection Draining)
+### 9.2. Graceful Shutdown (Connection Draining)
 
 * Problem:
 
   * During deployments or scaling down, active connections get dropped abruptly
 
-#### 🔸 Best Practice: Draining
+#### 9.2.1. Best Practice: Draining
 
 1. Mark server as **unavailable for new connections**
 2. Keep existing connections alive
@@ -1115,7 +1115,7 @@ Design for **eventual recovery, not perfect connectivity**
 
 ---
 
-#### 🔸 Techniques:
+#### 9.2.2. Techniques:
 
 * Load balancer removes node from rotation
 * Use **connection draining window** (e.g., 30–120 seconds)
@@ -1126,14 +1126,14 @@ Design for **eventual recovery, not perfect connectivity**
 
 ---
 
-### 3. Version Mismatches (Client vs Server)
+### 9.3. Version Mismatches (Client vs Server)
 
 * Reality:
 
   * Clients (especially mobile apps) may run **older versions**
   * Server gets updated frequently
 
-#### 🔸 Problems:
+#### 9.3.1. Problems:
 
 * Breaking message formats
 * Unsupported events/actions
@@ -1158,13 +1158,13 @@ Design for **eventual recovery, not perfect connectivity**
 
 ---
 
-### 4. Fallback Mechanisms (When WebSockets Are Blocked)
+### 9.4. Fallback Mechanisms (When WebSockets Are Blocked)
 
 * Issue:
 
   * Some environments (corporate proxies, firewalls) block WebSockets
 
-#### 🔸 Fallback Options:
+#### 9.4.1. Fallback Options:
 
 * **Long-polling**
 * **HTTP polling**
@@ -1172,7 +1172,7 @@ Design for **eventual recovery, not perfect connectivity**
 
 ---
 
-#### 🔸 Common Approach:
+#### 9.4.2. Common Approach:
 
 * Libraries like Socket.IO:
 
@@ -1180,7 +1180,7 @@ Design for **eventual recovery, not perfect connectivity**
 
 ---
 
-#### 🔸 Detection:
+#### 9.4.3. Detection:
 
 * Connection upgrade fails → fallback triggered
 * Timeout-based fallback
@@ -1200,3 +1200,22 @@ Design for **eventual recovery, not perfect connectivity**
 * Key techniques include **reconnection + replay, graceful connection draining, backward-compatible protocols, and fallback mechanisms when WebSockets are unavailable**.
 
 ---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
