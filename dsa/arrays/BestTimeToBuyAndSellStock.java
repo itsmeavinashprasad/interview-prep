@@ -45,21 +45,13 @@ import java.util.Arrays;
 public class BestTimeToBuyAndSellStock {
 
     public int maxProfit(int[] prices) {
-        // TODO: implement
-        int bp = Integer.MAX_VALUE;
-        int sp = Integer.MIN_VALUE;
+        int buy = prices[0];
         int profit = 0;
 
         for (int x : prices) {
             // update if today max profit can be booked
-            sp = Math.max(sp, x);
-            profit = Math.max(profit, sp - bp);
-
-            // if lesser bp is found, then reset
-            if (x < bp) {
-                bp = x;
-                sp = x;
-            }
+            profit = Math.max(profit, x - buy);
+            buy = Math.min(buy, x);
         }
         return profit;
     }
